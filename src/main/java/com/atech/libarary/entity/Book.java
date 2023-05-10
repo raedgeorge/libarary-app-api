@@ -1,7 +1,8 @@
 package com.atech.libarary.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
+
+import javax.persistence.*;
 
 /**
  * @author raed abu Sa'da
