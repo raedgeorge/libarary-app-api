@@ -1,6 +1,9 @@
 package com.atech.libarary.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -11,9 +14,12 @@ import java.util.Date;
  * on 05/05/2023
  */
 
+@Builder
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "review")
+@AllArgsConstructor
 public class Review {
 
     @Id
