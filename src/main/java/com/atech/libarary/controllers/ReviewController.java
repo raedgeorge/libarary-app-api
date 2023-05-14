@@ -19,7 +19,6 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
-
     @GetMapping("/secure/user/book")
     public Boolean reviewBookByUser(@RequestHeader("Authorization") String token,
                                     @RequestParam ("bookId") Long bookId) throws Exception{

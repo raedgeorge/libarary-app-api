@@ -1,9 +1,12 @@
 package com.atech.libarary.controllers;
 
 import com.atech.libarary.entity.Book;
+import com.atech.libarary.responsemodels.ShelfCurrentLoansResponse;
 import com.atech.libarary.service.BookService;
 import com.atech.libarary.utils.ExtractJWT;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author raed abu Sa'da
@@ -19,6 +22,30 @@ public class BookController {
 
     public BookController(BookService bookService) {
         this.bookService = bookService;
+    }
+
+    @PutMapping("/secure/renewloan")
+    public void renewBookLoan(@RequestHeader("Authorization") String token,
+                              @RequestParam Long bookId) throws Exception{
+
+        String userEmail = ExtractJWT.payloadJWTExtraction(token,  "\"sub\"");
+        bookService.renewBookLoan(userEmail, bookId);
+    }
+
+
+    @PutMapping("/secure/returnbook")
+    public void returnBook(@RequestHeader(value = "Authorization") String token,
+                           @RequestParam("bookId") Long bookId) throws Exception {
+
+        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
+        bookService.returnBook(userEmail, bookId);
+    }
+
+    @GetMapping("/secure/currentloans")
+    public List<ShelfCurrentLoansResponse> getCurrentLoansForUser(@RequestHeader("Authorization") String token) throws Exception {
+
+        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
+        return bookService.currentLoans(userEmail);
     }
 
 
