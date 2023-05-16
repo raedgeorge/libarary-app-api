@@ -1,6 +1,7 @@
 package com.atech.libarary.config;
 
 import com.atech.libarary.entity.Book;
+import com.atech.libarary.entity.Message;
 import com.atech.libarary.entity.Review;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -25,8 +26,11 @@ public class RestDataConfig implements RepositoryRestConfigurer {
 
         config.exposeIdsFor(Book.class);
         config.exposeIdsFor(Review.class);
+        config.exposeIdsFor(Message.class);
+
         disableHttpMethods(Book.class, config, disallowedMethods);
         disableHttpMethods(Review.class, config, disallowedMethods);
+        disableHttpMethods(Message.class, config, disallowedMethods);
 
         cors.addMapping(config.getBasePath() + "/**")
             .allowedOrigins(allowedOrigins);
