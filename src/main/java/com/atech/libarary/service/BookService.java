@@ -2,8 +2,10 @@ package com.atech.libarary.service;
 
 import com.atech.libarary.dao.BookRepository;
 import com.atech.libarary.dao.CheckoutRepository;
+import com.atech.libarary.dao.HistoryRepository;
 import com.atech.libarary.entity.Book;
 import com.atech.libarary.entity.Checkout;
+import com.atech.libarary.entity.History;
 import com.atech.libarary.responsemodels.ShelfCurrentLoansResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final HistoryRepository historyRepository;
     private final CheckoutRepository checkoutRepository;
 
     public Book checkOutBook(String userEmail, Long bookId) throws Exception {
@@ -127,6 +130,18 @@ public class BookService {
         }
 
         Book book = optionalBook.get();
+
+        History history = History.builder()
+                            .userEmail(userEmail)
+                            .author(book.getAuthor())
+                            .checkoutDate(checkout.getCheckoutDate())
+                            .returnDate(LocalDate.now().toString())
+                            .title(book.getTitle())
+                            .description(book.getDescription())
+                            .img(book.getImg()).build();
+
+        historyRepository.save(history);
+
         book.setCopiesAvailable(book.getCopiesAvailable() + 1);
         bookRepository.save(book);
         checkoutRepository.deleteById(checkout.getId());
