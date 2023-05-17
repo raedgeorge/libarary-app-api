@@ -1,6 +1,7 @@
 package com.atech.libarary.controllers;
 
 import com.atech.libarary.entity.Message;
+import com.atech.libarary.requestmodels.AdminQuestionRequest;
 import com.atech.libarary.service.MessageService;
 import com.atech.libarary.utils.ExtractJWT;
 import lombok.AllArgsConstructor;
@@ -24,5 +25,21 @@ public class MessageController {
 
         String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
         messageService.postMessage(message, userEmail);
+    }
+
+    @PutMapping("/secure/update/message")
+    public void updateMessage(@RequestHeader("Authorization") String token,
+                              @RequestBody AdminQuestionRequest adminQuestionRequest) throws Exception {
+
+        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
+//        String admin = ExtractJWT.payloadJWTExtraction(token, "\"userType\"");
+
+//        if (admin == null || !admin.equals("admin")){
+//            throw new Exception("Admin page only.");
+//        }
+
+        System.out.println(adminQuestionRequest);
+
+        messageService.updateMessage(adminQuestionRequest, userEmail);
     }
 }
