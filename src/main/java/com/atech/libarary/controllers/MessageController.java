@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * on 16/05/2023
  */
 
-@CrossOrigin("http://localhost:5173")
+@CrossOrigin("https://localhost:5173")
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/messages")

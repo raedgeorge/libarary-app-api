@@ -13,7 +13,7 @@ import java.util.List;
  * on 09/05/2023
  */
 
-@CrossOrigin("http://localhost:5173")
+@CrossOrigin("https://localhost:5173")
 @RestController
 @RequestMapping("/api/books")
 public class BookController {
